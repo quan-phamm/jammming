@@ -3,10 +3,10 @@ import React from 'react';
 const SearchResult = ({ searchData }) => {
     const trackLists = searchData.map(trackObj => {
         return (
-            <ul className='track' key={trackObj.id}>
-                <li>{trackObj.track}</li>
-                <li>{trackObj.artist.join(", ")}</li>
-            </ul>
+            <div className='track' key={trackObj.id}>
+                <p className='track-name'>{trackObj.track}</p>
+                <p className='artists'>{trackObj.artist.join(", ")}</p>
+            </div>
         )
     });
 
