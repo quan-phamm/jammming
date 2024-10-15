@@ -20,7 +20,8 @@ function App() {
   useEffect(() => {
     //fetch data from spotify based on search result, called everytime user click Search or submit a search input
     // jsonResponse = await response.json()
-    getSearchResult()
+    if (searchInput) {
+      getSearchResult()
       .then((jsonResponse) => {
         const items = jsonResponse.tracks.items;
         setSearchData(items.map((item) => {
@@ -33,6 +34,9 @@ function App() {
         }));
         setSearchInput("");
       })
+    } else {
+      setSearchData([]);
+    }
   }, [searchToggle]);
 
 
