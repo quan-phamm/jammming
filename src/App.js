@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import SearchResult from './components/SearchResult';
 import { getSearchResult } from './mock_data/fetchSearchQuery';
@@ -42,6 +43,7 @@ function App() {
 
     return (
         <>
+          <Header />
           <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
           <SearchResult searchData={searchData}/>
         </>
