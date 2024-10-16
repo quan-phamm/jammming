@@ -36,7 +36,7 @@ function App() {
           const trackObject = {
             id: item.id,
             track: item.name,
-            artist: item.artists.map((artistObject) => artistObject.name)
+            artists: item.artists.map((artistObject) => artistObject.name)
           };
           return trackObject;  
         }));
@@ -55,7 +55,7 @@ function App() {
         <Header />
         <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
         {displaySearchResult && <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack}/>}
-        <Playlist playlistName={playlistName} handlePlaylistName={namingPlaylist} searchData={searchData} playlistTrack={playlistTrack}/>
+        <Playlist playlistName={playlistName} handlePlaylistName={namingPlaylist} searchData={searchData} playlistTrack={playlistTrack} setPlaylistTrack={setPlaylistTrack}/>
       </>
   );
 };
