@@ -3,7 +3,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import SearchBar from './components/SearchBar';
 import SearchResult from './components/SearchResult';
-import { getSearchResult } from './mock_data/fetch';
+import { getSearchResult } from './mock_data/fetchSearchQuery';
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
