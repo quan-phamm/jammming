@@ -13,6 +13,7 @@ function App() {
   const [searchData, setSearchData] = useState([]);
   const [displaySearchResult, setDisplaySearchResult] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
+  const [playlistTrack, setPlaylistTrack] = useState([]);
 
   const handleSearchInput = ({target}) => setSearchInput(target.value);
 
@@ -35,7 +36,7 @@ function App() {
           const trackObject = {
             id: item.id,
             track: item.name,
-            artist: item.album.artists.map((artistObject) => artistObject.name)
+            artist: item.artists.map((artistObject) => artistObject.name)
           };
           return trackObject;  
         }));
@@ -53,8 +54,8 @@ function App() {
       <>
         <Header />
         <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
-        {displaySearchResult && <SearchResult searchData={searchData}/>}
-        <Playlist playlistName={playlistName} handlePlaylistName={namingPlaylist} searchData={searchData}/>
+        {displaySearchResult && <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack}/>}
+        <Playlist playlistName={playlistName} handlePlaylistName={namingPlaylist} searchData={searchData} playlistTrack={playlistTrack}/>
       </>
   );
 };

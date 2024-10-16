@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Playlist = ({ playlistName, handlePlaylistName, searchData}) => {
+const Playlist = ({ playlistName, handlePlaylistName, playlistTrack}) => {
     return (
         <div className='create-playlist'>
             <h2>Create Your Playlist</h2>
             <input id='playlist' name='playlist' type='text' aria-label="Playlist Name" placeholder="Playlist name" value={playlistName} onChange={handlePlaylistName}/>
-            {searchData.map(trackObj => (
+            {playlistTrack.map(trackObj => (
                 <div className='track' key={trackObj.id}>
                     <p className='track-name'>{trackObj.track}</p>
-                    <p className='artists'>{trackObj.artist.join(", ")}</p>
+                    <p className='artists'>{trackObj.artists.join(", ")}</p>
                 </div>
             ))}
             <button id='save-playlist' type='submit'>Save to Spotify</button>
