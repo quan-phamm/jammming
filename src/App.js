@@ -8,20 +8,22 @@ import { getSearchResult } from './mock_data/fetchSearchQuery';
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [searchToggle, setSearchToggle] = useState(false);
+  const [displaySearchResult, setDisplaySearchResult] = useState(false);
+
   const handleSearchInput = ({target}) => setSearchInput(target.value);
 
   // Call HTTP requests upon submitting the search input
   const handleSearchSubmit = e => {
     e.preventDefault();
-    setSearchToggle(!searchToggle);
+    setSearchQuery(searchInput);
   };
 
   useEffect(() => {
     //fetch data from spotify based on search result, called everytime user click Search or submit a search input
     // jsonResponse = await response.json()
-    if (searchInput) {
+    if (searchQuery) {
       getSearchResult()
       .then((jsonResponse) => {
         const items = jsonResponse.tracks.items;
@@ -34,18 +36,20 @@ function App() {
           return trackObject;  
         }));
         setSearchInput("");
+        setDisplaySearchResult(true);
       })
     } else {
       setSearchData([]);
-    }
-  }, [searchToggle]);
+      setDisplaySearchResult(false);
+    };
+  }, [searchQuery]);
 
 
     return (
         <>
           <Header />
           <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
-          <SearchResult searchData={searchData}/>
+          {displaySearchResult && <SearchResult searchData={searchData}/>}
         </>
     );
 };
