@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import SearchResult from './components/SearchResult';
+import Playlist from './components/Playlist';
 import { getSearchResult } from './mock_data/fetchSearchQuery';
 
 function App() {
@@ -11,8 +12,11 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [displaySearchResult, setDisplaySearchResult] = useState(false);
+  const [playlistName, setPlaylistName] = useState("");
 
   const handleSearchInput = ({target}) => setSearchInput(target.value);
+
+  const namingPlaylist = ({target}) => setPlaylistName(target.value);
 
   // Call HTTP requests upon submitting the search input
   const handleSearchSubmit = e => {
@@ -45,13 +49,14 @@ function App() {
   }, [searchQuery]);
 
 
-    return (
-        <>
-          <Header />
-          <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
-          {displaySearchResult && <SearchResult searchData={searchData}/>}
-        </>
-    );
+  return (
+      <>
+        <Header />
+        <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
+        {displaySearchResult && <SearchResult searchData={searchData}/>}
+        <Playlist playlistName={playlistName} handlePlaylistName={namingPlaylist} searchData={searchData}/>
+      </>
+  );
 };
 
 
