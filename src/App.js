@@ -36,7 +36,8 @@ function App() {
           const trackObject = {
             id: item.id,
             track: item.name,
-            artists: item.artists.map((artistObject) => artistObject.name)
+            artists: item.artists.map((artistObject) => artistObject.name),
+            uri: item.uri
           };
           return trackObject;  
         }));

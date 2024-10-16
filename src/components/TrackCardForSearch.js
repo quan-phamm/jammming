@@ -1,13 +1,13 @@
 import React from "react";
 
-const TrackCardForSearch = ({ id, track, artists, setPlaylistTrack }) => {
+const TrackCardForSearch = ({ id, track, artists, uri, setPlaylistTrack }) => {
     const handleAdd = () => {
         setPlaylistTrack(prev => {
             if (prev.some(trackObj => trackObj.id === id)) {
                 alert("You already add this song to your playlist!")
                 return prev;
             } else {
-                return [...prev, {id, track, artists}];
+                return [...prev, {id, track, artists, uri}];
             };
         });
     };

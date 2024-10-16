@@ -7,7 +7,14 @@ const Playlist = ({ playlistName, handlePlaylistName, playlistTrack, setPlaylist
             <h2>Create Your Playlist</h2>
             <input id='playlist' name='playlist' type='text' aria-label="Playlist Name" placeholder="Playlist name" value={playlistName} onChange={handlePlaylistName}/>
             {playlistTrack.map(trackObj => (
-                <TrackCardForPlaylist setPlaylistTrack={setPlaylistTrack} key={trackObj.id} id={trackObj.id} track={trackObj.track} artists={trackObj.artists}/>
+                <TrackCardForPlaylist
+                    setPlaylistTrack={setPlaylistTrack}
+                    key={trackObj.id}
+                    id={trackObj.id}
+                    track={trackObj.track}
+                    artists={trackObj.artists}
+                    uri={trackObj.uri}
+                />
             ))}
             <button id='save-playlist' type='submit'>Save to Spotify</button>
         </div>
