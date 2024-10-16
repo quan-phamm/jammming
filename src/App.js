@@ -54,7 +54,7 @@ function App() {
       <>
         <Header />
         <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
-        {displaySearchResult && <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack}/>}
+        <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack} displaySearchResult={displaySearchResult}/>
         <Playlist playlistName={playlistName} handlePlaylistName={namingPlaylist} searchData={searchData} playlistTrack={playlistTrack} setPlaylistTrack={setPlaylistTrack}/>
       </>
   );
