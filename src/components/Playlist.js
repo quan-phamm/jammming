@@ -16,7 +16,7 @@ const Playlist = ({ playlistName, handlePlaylistName, playlistTrack, setPlaylist
                     uri={trackObj.uri}
                 />
             ))}
-            <button id='save-playlist' type='submit'>Save to Spotify</button>
+            {playlistTrack.length > 0 ? <button id='save-playlist' type='submit'>Save to Spotify</button> : ""}
         </div>
     );
 };
