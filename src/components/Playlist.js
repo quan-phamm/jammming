@@ -1,7 +1,13 @@
 import React from 'react';
 import TrackCardForPlaylist from './TrackCardForPlaylist';
 
-const Playlist = ({ playlistName, handlePlaylistName, playlistTrack, setPlaylistTrack }) => {
+const Playlist = ({ playlistName, setPlaylistName, handlePlaylistName, playlistTrack, setPlaylistTrack, setPlaylistUris }) => {
+    const summarizeUris = () => {
+        setPlaylistUris(playlistTrack.map(trackObj => trackObj.uri))
+        setPlaylistTrack([]);
+        setPlaylistName("");
+    };
+
     return (
         <div className='create-playlist'>
             <h2>Create Your Playlist</h2>
@@ -16,7 +22,7 @@ const Playlist = ({ playlistName, handlePlaylistName, playlistTrack, setPlaylist
                     uri={trackObj.uri}
                 />
             ))}
-            {playlistTrack.length > 0 ? <button id='save-playlist' type='submit'>Save to Spotify</button> : ""}
+            {playlistTrack.length > 0 ? <button id='save-playlist' type='submit' onClick={summarizeUris}>Save to Spotify</button> : ""}
         </div>
     );
 };

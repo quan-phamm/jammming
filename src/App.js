@@ -14,6 +14,7 @@ function App() {
   const [displaySearchResult, setDisplaySearchResult] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
   const [playlistTrack, setPlaylistTrack] = useState([]);
+  const [playlistUris, setPlaylistUris] = useState([])
 
   const handleSearchInput = ({target}) => setSearchInput(target.value);
 
@@ -56,7 +57,7 @@ function App() {
         <Header />
         <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
         <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack} displaySearchResult={displaySearchResult}/>
-        <Playlist playlistName={playlistName} handlePlaylistName={namingPlaylist} searchData={searchData} playlistTrack={playlistTrack} setPlaylistTrack={setPlaylistTrack}/>
+        <Playlist playlistName={playlistName} setPlaylistName={setPlaylistName} handlePlaylistName={namingPlaylist} playlistTrack={playlistTrack} setPlaylistTrack={setPlaylistTrack} setPlaylistUris={setPlaylistUris}/>
       </>
   );
 };
