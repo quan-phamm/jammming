@@ -55,9 +55,11 @@ function App() {
   return (
       <>
         <Header />
-        <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
-        <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack} displaySearchResult={displaySearchResult}/>
-        <Playlist playlistName={playlistName} setPlaylistName={setPlaylistName} handlePlaylistName={namingPlaylist} playlistTrack={playlistTrack} setPlaylistTrack={setPlaylistTrack} setPlaylistUris={setPlaylistUris}/>
+        <main>
+          <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
+          <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack} displaySearchResult={displaySearchResult}/>
+          <Playlist playlistName={playlistName} setPlaylistName={setPlaylistName} handlePlaylistName={namingPlaylist} playlistTrack={playlistTrack} setPlaylistTrack={setPlaylistTrack} setPlaylistUris={setPlaylistUris}/>
+        </main>
       </>
   );
 };
