@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+body {    
+    background-image: url('./background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: 'Roboto';
+    color: #fff;
+}
+
+header {
+    position: fixed;
+    background-color: rgba(0,0,0,0.9);
+    color: #fff;
+    display: flex;
+    width: 100%;
+    height: 3.6rem;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+h1 {
+    
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+header span {
+    color: #5F10C7;
+}
+
+.dark-layer {
+    position: absolute;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+main {
+    position: relative;
+    top: 3.6rem;
+    display: grid;
+    grid-template: 10rem 60vh / 1fr 3fr 3fr;
+    gap: 2rem 3rem;
+    padding: 2rem;
+}
+
+.search-block {
+    grid-column: 1/span 3;
+}
+
+.search-block form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#search {
+    font-size: 1.3rem;
+    height: 4rem;
+    width: 100%;
+    padding: 0.6rem 1rem 0.8rem 0.5rem;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    border-radius: 2rem;
+}
+
+#search:focus {
+    border: none;
+}
+
+.search-result {
+    grid-area: 2/1/span 1/span 2;
+    background-color: rgba(0,0,0,0.8);
+    overflow: auto;
+}
+
+.create-playlist {
+    background-color: rgba(0,0,0,0.8);
+}

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
@@ -17,6 +16,13 @@ function App() {
   const [playlistUris, setPlaylistUris] = useState([])
 
   const handleSearchInput = ({target}) => setSearchInput(target.value);
+
+  const resetSearchInput = () => setSearchInput("");
+
+  const refreshSearch = () => {
+    setSearchData([]);
+    setDisplaySearchResult(false);
+  }
 
   const namingPlaylist = ({target}) => setPlaylistName(target.value);
 
@@ -41,14 +47,10 @@ function App() {
             uri: item.uri
           };
           return trackObject;  
-        }));
-        setSearchInput("");
+        }));  
         setDisplaySearchResult(true);
       })
-    } else {
-      setSearchData([]);
-      setDisplaySearchResult(false);
-    };
+    }
   }, [searchQuery]);
 
 
@@ -56,8 +58,9 @@ function App() {
       <>
         <Header />
         <main>
-          <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} handleSearchSubmit={handleSearchSubmit}/>
-          <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack} displaySearchResult={displaySearchResult}/>
+          <div className='dark-layer'></div>
+          <SearchBar searchInput={searchInput} handleSearchInput={handleSearchInput} resetSearchInput={resetSearchInput} handleSearchSubmit={handleSearchSubmit} refreshSearch={refreshSearch}/>
+          {displaySearchResult && <SearchResult searchData={searchData} setPlaylistTrack={setPlaylistTrack} displaySearchResult={displaySearchResult}/>}
           <Playlist playlistName={playlistName} setPlaylistName={setPlaylistName} handlePlaylistName={namingPlaylist} playlistTrack={playlistTrack} setPlaylistTrack={setPlaylistTrack} setPlaylistUris={setPlaylistUris}/>
         </main>
       </>

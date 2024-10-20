@@ -1,10 +1,10 @@
 import React from 'react';
 import TrackCardForSearch from './TrackCardForSearch';
 
-const SearchResult = ({ searchData, setPlaylistTrack, displaySearchResult }) => {
+const SearchResult = ({ searchData, setPlaylistTrack }) => {
     return (
         <div className='search-result'>
-            {displaySearchResult && <h2>Search Result</h2>}
+            <h2>Search Result</h2>
             {searchData.map(trackObj => (
                 <TrackCardForSearch
                     setPlaylistTrack={setPlaylistTrack}
