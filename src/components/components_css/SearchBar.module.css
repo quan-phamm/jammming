@@ -16,6 +16,7 @@
     transition-duration: 200ms;
     transition-property: all;
     transition-timing-function: linear;
+    cursor: text;
 }
 
 .searchBar:focus-within {
@@ -47,6 +48,10 @@
     cursor: pointer;
 }
 
+.icon button:active {
+    background-color: rgba(0,0,0, 0.1);
+}
+
 
 .searchIcon svg {
     width: 2rem;
@@ -71,7 +76,7 @@
 }
 
 .resetResultIcon button {
-    padding: none;
+    padding: 0px;
     border-radius: 50%;
     transition-duration: 200ms;
     transition-property: all;
@@ -79,12 +84,26 @@
 }
 
 .resetResultIcon button:hover {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 90%;
+    height: 90%;
     transition-duration: 200ms;
     transition-property: all;
     transition-timing-function: ease-in;
-    background-color: rgba(0,0,0, 0.1);
+    background-color: rgba(0,0,0, 0.08);
+}
+
+.resetResultIcon.refreshMouseDown button {
+    background-color: rgba(0,0,0, 0.15);
+}
+
+.resetResultIcon.refreshMouseUp button {
+    width: 50%;
+    height: 50%;
+    border: 1px solid;
+    background-color: transparent;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
 }
 
 .resetResultIcon svg {
