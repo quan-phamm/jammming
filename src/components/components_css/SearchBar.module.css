@@ -76,6 +76,7 @@
 }
 
 .resetResultIcon button {
+    border: #5e5e5e;
     padding: 0px;
     border-radius: 50%;
     transition-duration: 200ms;
@@ -99,7 +100,7 @@
 .resetResultIcon.refreshMouseUp button {
     width: 50%;
     height: 50%;
-    border: 1px solid;
+    border: 1px solid #5e5e5e;
     background-color: transparent;
     transition-duration: 200ms;
     transition-property: all;

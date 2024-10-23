@@ -17,15 +17,22 @@ header {
     background-color: rgba(0,0,0,0.9);
     color: #fff;
     display: flex;
+    justify-content: end;
+    align-items: center;
     width: 100%;
     height: 3.6rem;
-    justify-content: center;
-    align-items: center;
     z-index: 1;
 }
 
+header .header {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: -1;
+}
+
 h1 {
-    
     font-size: 2rem;
     font-weight: 600;
 }
@@ -34,25 +41,60 @@ header span {
     color: #5F10C7;
 }
 
+header button {
+    background-color: #d6d6d6;
+    min-width: 5%;
+    margin-right: 2%;
+    box-sizing: content-box;
+    border-radius: 0.5rem;
+    height: 2rem;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+    border: none;
+    font-weight: 550;
+}
+
+header button:hover {
+    background-color: #fff;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+header button:active {
+    background-color: #5F10C7;
+    color: #fff;
+    transition-duration: 100ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+}
+
+#reauth {
+    min-width: 7%;
+}
+
 .dark-layer {
     position: absolute;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.3);
     width: 100%;
     height: 100%;
     z-index: -2;
 }
 
 main {
+    display: flex;
     position: relative;
     top: 3.6rem;
-    display: grid;
-    grid-template: 10rem 60vh / 1fr 3fr 3fr;
-    gap: 2rem 3rem;
     padding: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .search-block {
-    grid-column: 1/span 3;
+    width: 100%;
 }
 
 .search-block form {
@@ -60,6 +102,7 @@ main {
     justify-content: center;
     align-items: center;
     height: 100%;
+    padding-left: 3.5rem;
 }
 
 #search {
@@ -77,12 +120,30 @@ main {
     border: none;
 }
 
+
+div.main-display {
+    display: flex;
+    justify-content: center;
+    height: 60vh;
+    margin: 2.5rem 0;
+    width: 70%;
+}
+
 .search-result {
-    grid-area: 2/1/span 1/span 2;
     background-color: rgba(0,0,0,0.8);
     overflow: auto;
+    flex-grow: 2;
+    margin-right: 3rem;
 }
 
 .create-playlist {
     background-color: rgba(0,0,0,0.8);
+    overflow: auto;
+    flex-basis: 45%;
+    flex-grow: 0;
+}
+
+.playlist-search {
+    flex-grow: 1;
+    flex-basis: 25%; 
 }
