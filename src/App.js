@@ -31,6 +31,7 @@ function App() {
       setUserLogin(true);
       window.location.hash = "";
     } else {
+      setUserLogin(false);
       console.log("No access token yet!");
     }
   }, [spotifyAccessToken]);
@@ -55,6 +56,10 @@ function App() {
 
   const [playlistTrack, setPlaylistTrack] = useState([]);
   const [playlistUris, setPlaylistUris] = useState([]);
+  const summarizeUris = () => {
+      setPlaylistUris(playlistTrack.map((trackObj) => trackObj.uri));
+  };
+
 
   // Call HTTP requests upon submitting the search input
   const [searchQuery, setSearchQuery] = useState("");
@@ -64,21 +69,20 @@ function App() {
     setSearchQuery(searchInput);
   };
 
-  const searchEndpoint = "https://api.spotify.com/v1/search";
   const parseQueryString = (queryString) => {
     return queryString.replace(" ", "+");
   };
-  async function getSearchResult(accessToken) {
+  const getSearchResult = async (accessToken) => {
+    const searchEndpoint = "https://api.spotify.com/v1/search";
     const urlToFetch = `${searchEndpoint}?q=${parseQueryString(
       searchQuery
     )}&type=track`;
-    console.log("Fetching from ", urlToFetch);
     const response = await fetch(urlToFetch, {
       headers: {
         Authorization: "Bearer " + accessToken,
       },
     });
-    console.log(response.status);
+    console.log("Status code (search query): ",response.status);
     const data = await response.json();
     console.log(data);
     return data;
@@ -104,8 +108,87 @@ function App() {
         setDisplaySearchResult(true);
         setSearchQuery("");
       });
-    }
+    };
   }, [searchQuery]);
+
+
+  const [userSpotifyId, setUserSpotifyId] = useState("");
+  const getUserProfileEndpoint = "https://api.spotify.com/v1/me";
+  const getUserId = async (accessToken) => {
+    console.log("Fetching user data...");
+    const response = await fetch(getUserProfileEndpoint, {
+      headers: {
+        Authorization: "Bearer " + accessToken
+      }
+    });
+    console.log("Status code (get user's info): ",response.status);
+    const data = await response.json();
+    console.log(data);
+    return data.id;
+  };
+  useEffect(() => {
+    if (spotifyAccessToken) {
+      getUserId(spotifyAccessToken).then(userId => {
+        setUserSpotifyId(userId);
+      });
+    };
+  }, [spotifyAccessToken])
+
+
+  const createPlaylist = async (playlistInput, userId) => {
+    console.log("Creating playlist...")
+    const createPlaylistEndpoint = `https://api.spotify.com/v1/users/${userId}/playlists`;
+    const requestInit = {
+      method: 'POST',
+      headers: {
+        Authorization: "Bearer " + spotifyAccessToken,
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        'name': playlistInput,
+        'description': "",
+        'public': false
+      })
+    };
+    const response = await fetch(createPlaylistEndpoint, requestInit);
+    console.log("Status code (create playlist): ",response.status);
+    const data = await response.json();
+    console.log(data);
+    return data.id;
+  };
+
+  const saveToPlaylist = async (playlistId, uris) => {
+    console.log("Saving songs to playlist...");
+    const saveToPlaylistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+    setPlaylistUris(playlistTrack.map((trackObj) => trackObj.uri));
+    const requestInit = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + spotifyAccessToken,
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        'uris': uris,
+        'position': 0
+      })
+    };
+    console.log(requestInit);
+    const response = await fetch(saveToPlaylistEndpoint, requestInit)
+    console.log("Status code (add tracks): ",response.status);
+    const data = await response.json();
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (playlistUris.length !== 0) {
+      createPlaylist(playlistName, userSpotifyId).then(playlistId => {
+        saveToPlaylist(playlistId, playlistUris)
+        setPlaylistTrack([]);
+        setPlaylistName("");
+      });
+    };
+  }, [playlistUris]);
+
 
   return (
     <>
@@ -135,6 +218,7 @@ function App() {
             setPlaylistTrack={setPlaylistTrack}
             setPlaylistUris={setPlaylistUris}
             displaySearchResult={displaySearchResult}
+            handleSavingToPlaylist={summarizeUris}
           />
         </div>
       </main>

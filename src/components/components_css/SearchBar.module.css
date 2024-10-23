@@ -1,14 +1,16 @@
 .searchBar {
     display: flex;
+    height: 70px;
     min-width: 30%;
     border: 2px solid #5F10C7;
     border-radius: 2rem;
     background-color: #d6d6d6;
     padding-left: 0.8rem;
-    box-sizing: content-box;
+    box-sizing: border-box;
     transition-duration: 200ms;
     transition-property: all;
     transition-timing-function: linear;
+    color: rgb(70, 70, 70)
 }
 
 .searchBar:hover {

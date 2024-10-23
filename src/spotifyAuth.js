@@ -21,6 +21,8 @@ export const spotifyAuth = () => {
                 playlist-read-collaborative 
                 playlist-modify-public 
                 playlist-modify-private
+                user-read-private
+                user-read-email
                 `;
 
   var url = "https://accounts.spotify.com/authorize";

@@ -3,24 +3,21 @@ import TrackCardForPlaylist from "./TrackCardForPlaylist";
 
 const Playlist = ({
   playlistName,
-  setPlaylistName,
   handlePlaylistName,
   playlistTrack,
   setPlaylistTrack,
-  setPlaylistUris,
-  displaySearchResult
+  displaySearchResult,
+  handleSavingToPlaylist
 }) => {
-  const summarizeUris = () => {
-    setPlaylistUris(playlistTrack.map((trackObj) => trackObj.uri));
-    setPlaylistTrack([]);
-    setPlaylistName("");
-  };
-
   return (
-    <div className={`${displaySearchResult ? 'playlist-search': ''} create-playlist`}>
+    <div
+      className={`${
+        displaySearchResult ? "playlist-search" : ""
+      } create-playlist`}
+    >
       <h2>Create Your Playlist</h2>
       <input
-        id="playlist"
+        id="playlist-input"
         name="playlist"
         type="text"
         aria-label="Playlist Name"
@@ -28,23 +25,27 @@ const Playlist = ({
         value={playlistName}
         onChange={handlePlaylistName}
       />
-      {playlistTrack.map((trackObj) => (
-        <TrackCardForPlaylist
-          setPlaylistTrack={setPlaylistTrack}
-          key={trackObj.id}
-          id={trackObj.id}
-          track={trackObj.track}
-          artists={trackObj.artists}
-          uri={trackObj.uri}
-        />
-      ))}
-      {playlistTrack.length > 0 ? (
-        <button id="save-playlist" type="submit" onClick={summarizeUris}>
-          Save to Spotify
-        </button>
-      ) : (
-        ""
-      )}
+      <div className="trackcard-container">
+        {playlistTrack.map((trackObj) => (
+          <TrackCardForPlaylist
+            setPlaylistTrack={setPlaylistTrack}
+            key={trackObj.id}
+            id={trackObj.id}
+            track={trackObj.track}
+            artists={trackObj.artists}
+            uri={trackObj.uri}
+          />
+        ))}
+        {playlistTrack.length > 0 ? (
+          <div id="save-playlist">
+            <button type="submit" onClick={handleSavingToPlaylist}>
+              Save to Spotify
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

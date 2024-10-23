@@ -12,6 +12,14 @@ body {
     color: #fff;
 }
 
+.dark-layer {
+    position: absolute;
+    background-color: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
 header {
     position: absolute;
     background-color: rgba(0,0,0,0.9);
@@ -76,14 +84,6 @@ header button:active {
     min-width: 7%;
 }
 
-.dark-layer {
-    position: absolute;
-    background-color: rgba(0,0,0,0.3);
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-}
-
 main {
     display: flex;
     position: relative;
@@ -109,7 +109,7 @@ main {
     font-size: 1.3rem;
     height: 4rem;
     width: 100%;
-    padding: 0.6rem 1rem 0.8rem 0.5rem;
+    padding: 0.6rem 1rem 0.6rem 0.5rem;
     outline: none;
     background-color: transparent;
     border: none;
@@ -118,6 +118,7 @@ main {
 
 #search:focus {
     border: none;
+    padding-bottom: .8rem;
 }
 
 
@@ -126,24 +127,177 @@ div.main-display {
     justify-content: center;
     height: 60vh;
     margin: 2.5rem 0;
-    width: 70%;
+    width: 75%;
 }
 
 .search-result {
-    background-color: rgba(0,0,0,0.8);
+    border: 5px solid rgb(0,0,0);
+    border-radius: 2%;
+    background-color: rgba(0,0,0,0.7);
     overflow: auto;
     flex-grow: 2;
     margin-right: 3rem;
+    padding: 1rem;
 }
 
 .create-playlist {
-    background-color: rgba(0,0,0,0.8);
+    border: 5px solid rgb(0,0,0);
+    border-radius: 2%;
+    background-color: rgba(0,0,0,0.7);
     overflow: auto;
     flex-basis: 45%;
     flex-grow: 0;
+    padding: 1rem;
 }
 
 .playlist-search {
     flex-grow: 1;
-    flex-basis: 25%; 
+    flex-basis: 30%; 
+}
+
+h2 {
+    font-size: 1.3rem;
+    font-weight: bolder;
+}
+
+.trackcard-container {
+    display: grid;
+}
+
+.track-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #aaaaaa;
+    padding: 12px 2px;
+}
+
+.track {
+    line-height: 1.5;
+}
+
+p.track-name {
+    height: 1.8rem;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+p.artists {
+    font-size: 14px;
+    color: #d6d6d6;
+}
+
+.track-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.track-button button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0px;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.track-button button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: #fff;
+    transition-duration: 100ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+}
+
+.track-button:hover {
+    border-radius: 50%;
+    background-color: rgba(119, 119, 119, 0.4);
+}
+
+.track-button button svg:active {
+    fill: #8e3afc;
+    transition-duration: 100ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+}
+
+#playlist-input {
+    margin: 1rem 0 0.5rem 0;
+    padding: 8px;
+    border-radius: 0.25rem;
+    border: none;
+    outline: none;
+    background-color: #e2e2e2;
+    color: #494949;
+    height: 2.4rem;
+    width: 50%;
+    font-size: 1rem;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+
+#playlist-input:hover {
+    background-color: #fff;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: linear;
+    color: #000000;
+}
+
+
+#playlist-input:focus {
+    background-color: #fff;
+    color: #000000;
+}
+
+#save-playlist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    background-color: transparent;
+    border: none;
+}
+
+#save-playlist button {
+    flex-grow: 1;
+    flex-shrink: 1;
+    background-color: #d6d6d6;
+    border: none;
+    outline: none;
+    min-width: 160px;
+    flex-basis: 200px;
+    max-width: 248px;
+    height: 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 1rem;
+    transition-property: all;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in;
+    cursor: pointer;
+}
+
+#save-playlist button:hover {
+    background-color: #fff;
+    transition-duration: 150ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+    font-size: 0.92rem;
+}
+
+#save-playlist button:active {
+    background-color: #5F10C7;
+    color: #fff;
+    transition-duration: 100ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
 }
