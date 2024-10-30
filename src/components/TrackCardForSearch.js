@@ -19,7 +19,7 @@ const TrackCardForSearch = ({ id, track, artists, uri, setPlaylistTrack }) => {
         <p className="artists">{artists.join(", ")}</p>
       </div>
       <div className="track-button">
-        <button id="add-track" type="button" onClick={handleAdd}>
+        <button id="add-track" type="button" onClick={handleAdd} title="Add track">
           <svg
             fill="#fff"
             viewBox="0 0 24 24"

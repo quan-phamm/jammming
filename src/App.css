@@ -126,7 +126,7 @@ div.main-display {
     display: flex;
     justify-content: center;
     height: 60vh;
-    margin: 2.5rem 0;
+    margin: 2.5rem 0 2rem 0;
     width: 75%;
 }
 
@@ -140,7 +140,13 @@ div.main-display {
     padding: 1rem;
 }
 
+.search-result::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
 .create-playlist {
+    display: flex;
+    flex-direction: column;
     border: 5px solid rgb(0,0,0);
     border-radius: 2%;
     background-color: rgba(0,0,0,0.7);
@@ -150,9 +156,29 @@ div.main-display {
     padding: 1rem;
 }
 
+.create-playlist::-webkit-scrollbar {
+width: 8px;
+}
+
+/* Track */
+.create-playlist::-webkit-scrollbar-track {
+background: transparent;
+}
+
+/* Handle */
+.create-playlist::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+/* Handle on hover */
+.create-playlist::-webkit-scrollbar-thumb:hover {
+background: #555; 
+}
+
 .playlist-search {
-    flex-grow: 1;
-    flex-basis: 30%; 
+    /* flex-grow: 0;
+    flex-shrink: 0; */
+    flex-basis: 40%; 
 }
 
 h2 {
@@ -160,8 +186,114 @@ h2 {
     font-weight: bolder;
 }
 
+.new-playlist {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.create-new-playlist {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.75rem 0;
+}
+
+.new-playlist button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.new-playlist svg {
+    width: 2rem;
+    height: 2rem;
+    fill: rgb(150, 150, 150);
+    stroke: rgb(150, 150, 150);
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+}
+
+.create-hovered svg {
+    fill: rgb(200, 200, 200);
+    stroke: rgb(200, 200, 200);
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+}
+
+.new-playlist p {
+    color: rgb(150, 150, 150);
+    font-weight: 700;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+}
+
+p.underline {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    color: rgb(200, 200, 200);
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+}
+
+.playlist-input {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding-right: 0.5rem;
+}
+
+.playlist-input button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playlist-input svg {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+#playlist-input {
+    padding: 4px 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 1.4rem;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: linear;
+    flex-grow: 1;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+#playlist-input:hover {
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: linear;
+}
+
+#clear-playlist-input svg {
+    fill: rgb(150, 150, 150);
+}
+
+#clear-playlist-input svg:hover {
+    fill: rgb(200, 200, 200);
+}
+
 .trackcard-container {
     display: grid;
+    height: inherit;
 }
 
 .track-card {
@@ -193,6 +325,11 @@ p.artists {
     align-items: center;
     width: 2.5rem;
     height: 2.5rem;
+    border-radius: 50%;
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
+    flex-shrink: 0;
 }
 
 .track-button button {
@@ -205,6 +342,9 @@ p.artists {
     padding: 0px;
     width: 1.5rem;
     height: 1.5rem;
+    transition-duration: 100ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
 }
 
 .track-button button svg {
@@ -217,8 +357,10 @@ p.artists {
 }
 
 .track-button:hover {
-    border-radius: 50%;
     background-color: rgba(119, 119, 119, 0.4);
+    transition-duration: 200ms;
+    transition-property: all;
+    transition-timing-function: ease-in;
 }
 
 .track-button button svg:active {
@@ -226,36 +368,6 @@ p.artists {
     transition-duration: 100ms;
     transition-property: all;
     transition-timing-function: ease-in;
-}
-
-#playlist-input {
-    margin: 1rem 0 0.5rem 0;
-    padding: 8px;
-    border-radius: 0.25rem;
-    border: none;
-    outline: none;
-    background-color: #e2e2e2;
-    color: #494949;
-    height: 2.4rem;
-    width: 50%;
-    font-size: 1rem;
-    transition-duration: 200ms;
-    transition-property: all;
-    transition-timing-function: linear;
-}
-
-#playlist-input:hover {
-    background-color: #fff;
-    transition-duration: 200ms;
-    transition-property: all;
-    transition-timing-function: linear;
-    color: #000000;
-}
-
-
-#playlist-input:focus {
-    background-color: #fff;
-    color: #000000;
 }
 
 #save-playlist {
@@ -295,6 +407,7 @@ p.artists {
 }
 
 #save-playlist button:active {
+    font-size: 0.92rem;
     background-color: #5F10C7;
     color: #fff;
     transition-duration: 100ms;

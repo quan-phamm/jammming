@@ -12,7 +12,7 @@ const TrackCardForPlaylist = ({ id, track, artists, setPlaylistTrack }) => {
         <p className="artists">{artists.join(", ")}</p>
       </div>
       <div className="track-button">
-        <button id="remove-track" type="button" onClick={handleRemove}>
+        <button id="remove-track" type="button" onClick={handleRemove} title="Remove track">
           <svg
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
