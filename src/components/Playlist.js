@@ -127,7 +127,7 @@ const Playlist = ({
             uri={trackObj.uri}
           />
         ))}
-        {playlistTrack.length > 0 ? (
+        {playlistTrack.length >= 0 ? (
           <div id="save-playlist">
             <button type="submit" onClick={handleSavingToPlaylist}>
               Save to Spotify

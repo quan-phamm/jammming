@@ -11,10 +11,8 @@ const SearchResult = ({
   useEffect(() => {
     const cardContainer = cardContainerRef.current;
     const handleScroll = () => {
-      console.log("User scrolling")
       const { scrollTop, scrollHeight, clientHeight } = cardContainer;
       if (Math.abs(scrollHeight - clientHeight - scrollTop) <= 1) {
-        console.log("Fetching more...");
         getMoreSearchResult();
       }
     };
@@ -29,10 +27,10 @@ const SearchResult = ({
     <div className="search-result" ref={cardContainerRef}>
       <h2>Search Results</h2>
       <div className="trackcard-container">
-        {searchData.map((trackObj) => (
+        {searchData.map((trackObj, index) => (
           <TrackCardForSearch
             setPlaylistTrack={setPlaylistTrack}
-            key={trackObj.id}
+            key={`${trackObj.id}-${index}`}
             id={trackObj.id}
             track={trackObj.track}
             artists={trackObj.artists}

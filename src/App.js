@@ -10,6 +10,7 @@ function App() {
   const [spotifyAccessToken, setSpotifyAccessToken] = useState("");
   const [userLogin, setUserLogin] = useState(false);
 
+  // Extract all the parameters from the hash section of the URL and store them as key-value pairs in an object
   const getTokenFromUrl = () => {
     return window.location.hash
       .substring(1)
@@ -44,20 +45,17 @@ function App() {
   const handleSearchInput = ({ target }) => setSearchInput(target.value);
   const resetSearchInput = () => setSearchInput("");
 
-  const [searchData, setSearchData] = useState([]);
-  const refreshSearch = () => {
-    setSearchData([]);
-    setDisplaySearchResult(false);
-    setSearchInput("");
-  };
-
   const [playlistName, setPlaylistName] = useState("");
   const namingPlaylist = ({ target }) => setPlaylistName(target.value);
 
   const [playlistTrack, setPlaylistTrack] = useState([]);
-  const [playlistUris, setPlaylistUris] = useState([]);
+  const [playlistUris, setPlaylistUris] = useState("");
   const summarizeUris = () => {
-    setPlaylistUris(playlistTrack.map((trackObj) => trackObj.uri));
+    if (!playlistName) {
+      alert("Please type in a name for your playlist!");
+    } else {
+      setPlaylistUris(playlistTrack.map((trackObj) => trackObj.uri));
+    }
   };
 
   // Call HTTP requests upon submitting the search input
@@ -68,91 +66,121 @@ function App() {
     setSearchQuery(searchInput);
   };
 
-  const parseQueryString = (queryString) => {
-    return queryString.replace(" ", "+");
+  const [searchData, setSearchData] = useState([]);
+  const refreshSearch = () => {
+    setSearchData([]);
+    setDisplaySearchResult(false);
+    setSearchInput("");
   };
 
   const [nextPage, setNextPage] = useState("");
 
   const getSearchResult = async () => {
     const searchEndpoint = "https://api.spotify.com/v1/search";
-    const urlToFetch = `${searchEndpoint}?q=${parseQueryString(
+    const urlToFetch = `${searchEndpoint}?q=${encodeURIComponent(
       searchQuery
     )}&type=track`;
-    const response = await fetch(urlToFetch, {
+    console.log("Fetching tracks from:", urlToFetch);
+    const requestInit = {
       headers: {
         Authorization: "Bearer " + spotifyAccessToken,
       },
-    });
-    console.log("Status code (search query): ", response.status);
-    const data = await response.json();
-    setNextPage(data.tracks.next);
-    console.log(data);
-    const items = data.tracks.items;
-    setSearchData(
-      items.map((item) => {
-        const trackObject = {
-          id: item.id,
-          track: item.name,
-          artists: item.artists.map((artistObject) => artistObject.name),
-          uri: item.uri,
-        };
-        return trackObject;
-      })
-    );
-    setDisplaySearchResult(true);
-    setSearchQuery("");
+    };
+    try {
+      const response = await fetch(urlToFetch, requestInit);
+      const data = await response.json();
+      if (response.status !== 200) {
+        alert(
+          `Unsuccessful request!\nStatus code: ${response.status}\nError message: ${data.error.message}`
+        );
+      } else {
+        console.log("Fetching tracks successfuly!");
+        setNextPage(data.tracks.next);
+        const items = data.tracks.items;
+        setSearchData(
+          items.map((item) => {
+            const trackObject = {
+              id: item.id,
+              track: item.name,
+              artists: item.artists.map((artistObject) => artistObject.name),
+              uri: item.uri,
+            };
+            return trackObject;
+          })
+        );
+      }
+      setDisplaySearchResult(true);
+      setSearchQuery("");
+    } catch (e) {
+      alert(`Catching unexpected error: ${e}`);
+    }
   };
 
   const getMoreSearchResult = async () => {
     if (!nextPage) return;
-    console.log(nextPage);
-    const response = await fetch(nextPage, {
-      headers: { Authorization: `Bearer ${spotifyAccessToken}` },
-    });
-    console.log("Status code (search query): ", response.status);
-    const data = await response.json();
-    setNextPage(data.tracks.next);
-    console.log(data);
-    const items = data.tracks.items;
-    setSearchData(prev => [...prev,
-      ...items.map((item) => {
-        const trackObject = {
-          id: item.id,
-          track: item.name,
-          artists: item.artists.map((artistObject) => artistObject.name),
-          uri: item.uri,
-        };
-        return trackObject;
-      })]
-    );
-    setDisplaySearchResult(true);
-    setSearchQuery("");
+    console.log("Fetching more tracks from:", nextPage);
+    try {
+      const response = await fetch(nextPage, {
+        headers: { Authorization: `Bearer ${spotifyAccessToken}` },
+      });
+      const data = await response.json();
+      if (response.status !== 200) {
+        alert(
+          `Unsuccessful request!\nStatus code: ${response.status}\nError message: ${data.error.message}`
+        );
+      } else {
+        console.log("Fetching more tracks successfully!");
+        setNextPage(data.tracks.next);
+        const items = data.tracks.items;
+        setSearchData((prev) => [
+          ...prev,
+          ...items.map((item) => {
+            const trackObject = {
+              id: item.id,
+              track: item.name,
+              artists: item.artists.map((artistObject) => artistObject.name),
+              uri: item.uri,
+            };
+            return trackObject;
+          }),
+        ]);
+      }
+    } catch (e) {
+      alert(`Catching unexpected error: ${e}`);
+    }
   };
 
   useEffect(() => {
     //fetch data from spotify based on search result, called everytime user click Search or submit a search input
-    // jsonResponse = await response.json()
     if (searchQuery) {
-      console.log("Searching for ", searchQuery);
       getSearchResult();
     }
   }, [searchQuery]);
 
   const [userSpotifyId, setUserSpotifyId] = useState("");
-  const getUserProfileEndpoint = "https://api.spotify.com/v1/me";
   const getUserId = async (accessToken) => {
     console.log("Fetching user data...");
-    const response = await fetch(getUserProfileEndpoint, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    });
-    console.log("Status code (get user's info): ", response.status);
-    const data = await response.json();
-    console.log(data);
-    return data.id;
+    const getUserProfileEndpoint = "https://api.spotify.com/v1/me";
+    try {
+      const response = await fetch(getUserProfileEndpoint, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      const data = await response.json();
+      if (response.status !== 200) {
+        alert(
+          `Unsuccessful request!\nStatus code: ${response.status}\nError message: ${data.error.message}`
+        );
+      } else {
+        console.log("User data is retrieved successfully!");
+        return data.id;
+      }
+    } catch (e) {
+      alert(`Catching unexpected error: ${e}`);
+    }
   };
+
   useEffect(() => {
     if (spotifyAccessToken) {
       getUserId(spotifyAccessToken).then((userId) => {
@@ -176,15 +204,24 @@ function App() {
         public: false,
       }),
     };
-    const response = await fetch(createPlaylistEndpoint, requestInit);
-    console.log("Status code (create playlist): ", response.status);
-    const data = await response.json();
-    console.log(data);
-    return data.id;
+    try {
+      const response = await fetch(createPlaylistEndpoint, requestInit);
+      const data = await response.json();
+      if (response.status !== 201) {
+        alert(
+          `Unsuccessful request!\nStatus code: ${response.status}\nError message: ${data.error.message}`
+        );
+      } else {
+        console.log("Playlist created with id:", data.id);
+        return data.id;
+      }
+    } catch (e) {
+      alert(`Catching unexpected error: ${e}`);
+    }
   };
 
   const saveToPlaylist = async (playlistId, uris) => {
-    console.log("Saving songs to playlist...");
+    console.log("Saving tracks to playlist with id:", playlistId);
     const saveToPlaylistEndpoint = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
     const requestInit = {
       method: "POST",
@@ -197,21 +234,34 @@ function App() {
         position: 0,
       }),
     };
-    console.log(requestInit);
-    const response = await fetch(saveToPlaylistEndpoint, requestInit);
-    console.log("Status code (add tracks): ", response.status);
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await fetch(saveToPlaylistEndpoint, requestInit);
+      const data = await response.json();
+      if (response.status !== 201) {
+        alert(
+          `Unsuccessful request!\nStatus code: ${response.status}\nError message: ${data.error.message}`
+        );
+      } else {
+        console.log("Tracks saved to playlist successfully!");
+      }
+    } catch (e) {
+      alert(`Catching unexpected error: ${e}`);
+    }
   };
 
   useEffect(() => {
-    console.log("he", playlistUris);
     if (playlistUris.length !== 0 && playlistName) {
       createPlaylist(playlistName, userSpotifyId).then((playlistId) => {
         saveToPlaylist(playlistId, playlistUris);
         setPlaylistTrack([]);
         setPlaylistName("");
+        setPlaylistUris("");
       });
+    } else if (playlistUris.length === 0 && playlistName) {
+      createPlaylist(playlistName, userSpotifyId);
+      setPlaylistTrack([]);
+      setPlaylistName("");
+      setPlaylistUris("");
     }
   }, [playlistUris]);
 
