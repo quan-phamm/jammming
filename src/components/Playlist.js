@@ -22,12 +22,14 @@ const Playlist = ({
   }
 
   useEffect(() => {
-    if (showInput && playlistInputRef.current) {
-      playlistInputRef.current.focus(); // Focus the input when it appears.
-      const handleClick = () => {playlistInputRef.current.focus()};
-      createPlaylistRef.current.addEventListener('click', handleClick);
+    const playlistInput = playlistInputRef.current;
+    const createPlaylist = createPlaylistRef.current;
+    if (showInput && playlistInput) {
+      playlistInput.focus(); // Focus the input when it appears.
+      const handleClick = () => {playlistInput.focus()};
+      createPlaylist.addEventListener('click', handleClick);
       return () => {
-        createPlaylistRef.current.removeEventListener('click', handleClick);
+        createPlaylist.removeEventListener('click', handleClick);
       };
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps

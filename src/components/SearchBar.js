@@ -14,13 +14,14 @@ const SearchBar = ({
   const searchInputRef = useRef(null);
   const searchBarRef = useRef(null);
   useEffect(() => {
+    const searchBar = searchBarRef.current;
     const handleClick = () => {
-      searchInputRef.current.focus();
+      searchBar.focus();
     };
-    searchBarRef.current.addEventListener("click", handleClick);
+    searchBar.addEventListener("click", handleClick);
 
     return () => {
-      searchBarRef.current.removeEventListener("click", handleClick);
+      searchBar.removeEventListener("click", handleClick);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
