@@ -12,7 +12,7 @@ export const spotifyAuth = () => {
     return text;
   }
   var client_id = "a7c8c4d60a794d498adb10b444f50f44";
-  var redirect_uri = "http://localhost:3000";
+  var redirect_uri = "https://zenojammming.netlify.app";
 
   var state = generateRandomString(16);
 
