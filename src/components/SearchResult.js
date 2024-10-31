@@ -21,6 +21,7 @@ const SearchResult = ({
     return () => {
       cardContainer.removeEventListener("scroll", handleScroll);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextPage]);
 
   return (

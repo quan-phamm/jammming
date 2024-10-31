@@ -22,6 +22,7 @@ const SearchBar = ({
     return () => {
       searchBarRef.current.removeEventListener("click", handleClick);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

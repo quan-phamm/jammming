@@ -155,6 +155,7 @@ function App() {
     if (searchQuery) {
       getSearchResult();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   const [userSpotifyId, setUserSpotifyId] = useState("");
@@ -263,6 +264,7 @@ function App() {
       setPlaylistName("");
       setPlaylistUris("");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlistUris]);
 
   return (
